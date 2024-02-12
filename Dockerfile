@@ -49,6 +49,8 @@ ENV IS_DOCKER 1
 # Production
 ############
 
+# TODO: run migrations and user configuration here
+
 FROM test as prod
 WORKDIR /app/savoy
 
