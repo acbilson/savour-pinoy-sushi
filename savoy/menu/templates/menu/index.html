@@ -4,7 +4,7 @@
 {% if menu_sections %}
     {% for section in menu_sections %}
 	 <h2>{{ section.title_txt }}</h2>
-	 <ul>
+	 <ul role="list">
 		 {% for item in section.menuitem_set.all %}
 		 <li>
 			 <h3>{{ item.title_txt }}</h3>
