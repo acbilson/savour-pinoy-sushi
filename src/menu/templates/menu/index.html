@@ -1,18 +1,39 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'menu/style.css' %}">
-<h1>Menu</h1>
-{% if menu_sections %}
-    {% for section in menu_sections %}
-	 <h2>{{ section.title_txt }}</h2>
-	 <ul role="list">
-		 {% for item in section.menuitem_set.all %}
-		 <li>
-			 <h3>{{ item.title_txt }}</h3>
-			 <p>{{ item.desc_txt }}</p>
-		 </li>
+<header class="wrapper">
+	<nav>
+		<ul role="list" class="spread compress">
+			<li><a href="/menu">Menu</a></li>
+			<li><a href="/locations">Locations</a></li>
+			<li><a href="https://facebook.com"><img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" /></a></li>
+		</ul>
+	</nav>
+</header>
+<main class="flow-l wrapper">
+	<section class="flow-m">
+	{% if menu_sections %}
+		 {% for section in menu_sections %}
+		 <h2>{{ section.title_txt }}</h2>
+		 <ul role="list">
+			 {% for item in section.menuitem_set.all %}
+			 <li class="spread-between | menu-item">
+				 <div>
+					 <h3>{{ item.title_txt }}</h3>
+					 <p>{{ item.desc_txt }}</p>
+				 </div>
+				 <div>
+					 <img class="flag" src="../static/menu/images/Flag_of_the_Philippines.svg" />
+				 </div>
+			 </li>
+			 {% endfor %}
 		 {% endfor %}
-    {% endfor %}
-	 </ul>
-{% else %}
-    <p>No menu sections are available.</p>
-{% endif %}
+		 </ul>
+	{% else %}
+		 <p>No menu sections are available.</p>
+	{% endif %}
+	</section>
+</main>
+<footer class="wrapper spread-evenly">
+	<div>© {% now "Y" %} Savoy Pinot, LLC</div>
+	<div>Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
+</footer>
