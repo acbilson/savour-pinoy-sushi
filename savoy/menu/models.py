@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+class MenuSection(models.Model):
+    title_txt = models.CharField(max_length=100)
+
+class MenuItem(models.Model):
+    title_txt = models.CharField(max_length=100)
+    desc_txt = models.CharField(max_length=200)
+    heat_rating = models.IntegerField(default=0)
+    section = models.ForeignKey(MenuSection, on_delete=models.CASCADE)
