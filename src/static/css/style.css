@@ -1,0 +1,466 @@
+:root {
+	/* @link https://utopia.fyi/type/calculator?c=320,19,1.125,1440,25,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+	/* font steps */
+  --step--2: clamp(0.84rem, calc(0.83rem + 0.06vw), 0.88rem);
+  --step--1: clamp(0.94rem, calc(0.88rem + 0.33vw), 1.17rem);
+  --step-0: clamp(1.06rem, calc(0.92rem + 0.71vw), 1.56rem);
+  --step-1: clamp(1.20rem, calc(0.94rem + 1.27vw), 2.08rem);
+  --step-2: clamp(1.35rem, calc(0.94rem + 2.04vw), 2.78rem);
+  --step-3: clamp(1.51rem, calc(0.89rem + 3.13vw), 3.70rem);
+  --step-4: clamp(1.70rem, calc(0.78rem + 4.62vw), 4.93rem);
+  --step-5: clamp(1.91rem, calc(0.58rem + 6.66vw), 6.58rem);
+
+  /* @link https://utopia.fyi/space/calculator?c=320,19,1.2,1440,25,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+	/* spacing steps */
+  --space-3xs: clamp(0.31rem, calc(0.29rem + 0.09vw), 0.38rem);
+  --space-2xs: clamp(0.63rem, calc(0.57rem + 0.27vw), 0.81rem);
+  --space-xs: clamp(0.88rem, calc(0.79rem + 0.45vw), 1.19rem);
+  --space-s: clamp(1.19rem, calc(1.08rem + 0.54vw), 1.56rem);
+  --space-m: clamp(1.81rem, calc(1.65rem + 0.80vw), 2.38rem);
+  --space-l: clamp(2.38rem, calc(2.16rem + 1.07vw), 3.13rem);
+  --space-xl: clamp(3.56rem, calc(3.24rem + 1.61vw), 4.69rem);
+  --space-2xl: clamp(4.75rem, calc(4.32rem + 2.14vw), 6.25rem);
+  --space-3xl: clamp(7.13rem, calc(6.48rem + 3.21vw), 9.38rem);
+
+	/* character steps */
+	--char-0: 60ch;
+	--char-1: 45ch;
+	--char-2: 40ch;
+	--char-3: 35ch;
+	--char-4: 25ch;
+	--char-5: 20ch;
+	--char-6: 17ch;
+
+	/* other */
+	--radius: 1rem;
+	--flow-space: 1em;
+	--border-size: 0.125rem;
+}
+
+:root {
+	--color-eggshell: rgb(255, 255, 252);
+	--color-midnight: rgb(22, 22, 26);
+	--color-royalty: rgb(39, 35, 67);
+	--color-navy-blue: navy;
+
+	--color-primary: var(--color-royalty);
+	--color-secondary: var(--color-eggshell);
+	--color-tertiary: var(--color-navy-blue);
+	--color-stroke: var(--color-midnight);
+}
+
+:root[theme="void"] {
+	--color-eggshell: rgb(255, 255, 252);
+	--color-magenta: rgb(127, 90, 240);
+	--color-pitch-black: rgb(1, 1, 1);
+	--color-slate: rgb(148, 161, 178);
+
+	--color-primary: var(--color-eggshell);
+	--color-secondary: var(--color-pitch-black);
+	--color-tertiary: var(--color-slate);
+	--color-stroke: var(--color-magenta);
+}
+
+/* reset.css @link https://github.com/hankchizljaw/modern-css-reset/blob/master/src/reset.css */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+fieldset,
+blockquote,
+dl,
+dd {
+	margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+	list-style: none;
+	padding-left: 0;
+}
+
+/* prevents the page from going outside the viewport for mobile  */
+html, body {
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+/* Set core root defaults */
+html:focus-within {
+	scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+	min-height: 100vh;
+	text-rendering: optimizeSpeed;
+	line-height: 1.5em;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+	text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+	max-width: 100%;
+	display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+	html:focus-within {
+		scroll-behavior: auto;
+	}
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* my baseline */
+
+* {
+	font-size: var(--step-0);
+	color: var(--color-primary);
+	border-color: var(--color-stroke);
+}
+
+body {
+	background-color: var(--color-secondary);
+}
+
+/* void theme fix to make inputs visible */
+:root[theme="void"] {
+	input:not([type="submit"]) {
+		color: var(--color-secondary);
+	}
+}
+
+input[type="submit"],
+button,
+select {
+	color: var(--color-secondary);
+	background-color: var(--color-tertiary);
+	border-radius: 0.25rem;
+}
+
+select,
+input,
+button {
+	padding-left: var(--space-2xs);
+	padding-right: var(--space-2xs);
+}
+
+/*  greys out disabled elements */
+button[disabled] {
+	background-color: grey;
+}
+
+input[readonly],
+input[disabled] {
+	color: grey;
+}
+
+/* generates headers on a scale */
+
+h1 {
+	font-size: var(--step-5);
+	line-height: var(--step-5);
+	max-width: var(--char-5);
+
+	> a {
+		font-size: inherit;
+	}
+
+	> a[href^="#"] {
+		display: none;
+	}
+}
+
+h2 {
+	font-size: var(--step-4);
+	line-height: var(--step-4);
+	max-width: var(--char-4);
+
+	> a {
+		font-size: inherit;
+	}
+
+	> a[href^="#"] {
+		display: none;
+	}
+}
+
+h3 {
+	font-size: var(--step-3);
+	line-height: var(--step-3);
+	max-width: var(--char-3);
+
+	> a {
+		font-size: inherit;
+	}
+
+	> a[href^="#"] {
+		display: none;
+	}
+}
+
+/* gives paragraphs default spacing */
+p + p {
+	margin-top: var(--space-xs);
+}
+
+/* makes abbreviations stand out */
+abbr {
+	text-decoration: underline;
+	text-decoration-style: dotted;
+}
+
+/* makes text pleasingly wide */
+p,
+li,
+ul,
+pre,
+figcaption {
+	max-width: var(--char-0);
+}
+
+/* ensures nav contents don't stretch container */
+nav {
+	li {
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+
+	/* overrides default padding */
+	select {
+		border: unset;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+/* ensures code blocks horizontally scroll and keep their default colors */
+pre {
+	overflow-x: auto;
+	padding-left: var(--space-2xs);
+	padding-right: var(--space-2xs);
+	> * {
+		color: unset;
+	}
+}
+
+:focus {
+	outline: 3px dotted var(--color-primary);
+	outline-offset: 0.2rem;
+}
+
+/* defines a better meter */
+meter::-webkit-meter-optimum-value {
+	box-shadow: 0 5px 5px -5px #999 inset;
+	background-image: linear-gradient(
+		90deg,
+		var(--color-secondary),
+		var(--color-primary)
+	);
+	background-size: 100% 100%;
+}
+
+/* gives some shape to tables */
+table {
+	border: var(--border-size) solid var(--color-stroke);
+	border-collapse: collapse;
+	border-spacing: 0;
+
+	th {
+		border: var(--border-size) solid var(--color-stroke);
+	}
+
+	td {
+		border: calc(var(--border-size) / 3) solid var(--color-stroke);
+	}
+
+	td,
+	th {
+		padding: var(--space-2xs);
+	}
+}
+
+/* makes block quotes stand out a little */
+blockquote {
+	border-left: 1px solid var(--color-stroke);
+	padding-left: var(--space-2xs);
+}
+
+/* makes images more beautiful */
+img {
+	border-radius: var(--radius);
+}
+
+figure {
+	width: fit-content;
+	max-width: var(--char-0);
+
+	figcaption {
+		font-style: italic;
+		text-align: center;
+	}
+}
+
+/* textareas should fill their container by default */
+textarea {
+	width: 100%;
+	height: -webkit-fill-available;
+}
+
+/* a better field set */
+fieldset {
+	/* unsets min-width to make it play better with sizing */
+	min-width: unset;
+	border-color: var(--color-stroke);
+	margin-inline-start: unset;
+	margin-inline-end: unset;
+	padding-block-start: unset;
+	padding-inline-start: unset;
+	padding-inline-end: unset;
+	padding-block-end: unset;
+	border: none;
+}
+
+/* makes components fit better into the flow */
+select
+{
+	display: block;
+}
+
+
+/*************/
+/* UTILITIES */
+/*************/
+
+.flow-l > * + * {
+	margin-top: calc(var(--flow-space, 1em) * 1);
+}
+.flow-m > * + * {
+	margin-top: calc(var(--flow-space, 1em) * 0.8);
+}
+.flow-s > * + * {
+	margin-top: calc(var(--flow-space, 1em) * 0.6);
+}
+.flow-t > * + * {
+	margin-top: calc(var(--flow-space, 1em) * 0.4);
+}
+
+.hidden {
+	display: none;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	width: fit-content;
+	max-width: 100%;
+}
+
+.fill {
+	width: 100%;
+}
+
+/* spread utility */
+.spread {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	column-gap: var(--flow-space);
+	row-gap: calc(var(--flow-space) / 2);
+}
+
+.spread-between {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.spread-evenly {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.spread-down {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--space-s);
+	padding-right: var(--space-s);
+}
+
+.highlight {
+	background: yellow;
+	width: fit-content;
+	max-width: 100%;
+}
+
+/**********/
+/* BLOCKS */
+/**********/
+
+footer > * {
+	font-size: var(--step--2);
+	font-size: var(--step--2);
+
+	> a {
+		font-size: inherit;
+	}
+}
+
+header {
+	nav {
+		a:hover {
+			text-decoration: none;
+		}
+		.icon:hover {
+			transform: scale(1.1);
+		}
+	}
+}
+
+.icon {
+	height: var(--step-0);
+}

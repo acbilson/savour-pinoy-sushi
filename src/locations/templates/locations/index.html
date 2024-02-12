@@ -1,6 +1,5 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'menu/style.css' %}">
 <header class="wrapper">
 	<nav>
 		<ul role="list" class="spread compress">
@@ -12,25 +11,20 @@
 </header>
 <main class="flow-l wrapper">
 	<section class="flow-m">
-	{% if menu_sections %}
-		 {% for section in menu_sections %}
-		 <h2>{{ section.title_txt }}</h2>
+	{% if locations_weekdays %}
+		 {% for day in locations_weekdays %}
+		 <h2>{{ day.weekday_txt }}</h2>
 		 <ul role="list">
-			 {% for item in section.menuitem_set.all %}
-			 <li class="spread-between | menu-item">
-				 <div>
-					 <h3>{{ item.title_txt }}</h3>
-					 <p>{{ item.desc_txt }}</p>
-				 </div>
-				 <div>
-					 <img class="flag" src="../static/menu/images/Flag_of_the_Philippines.svg" />
-				 </div>
+			 {% for stop in day.locationsstops_set.all %}
+			 <li class="spread-between">
+				 <h3>{{ stop.location_txt }}</h3>
+				 <p>{{ stop.hours_txt }}</p>
 			 </li>
 			 {% endfor %}
 		 {% endfor %}
 		 </ul>
 	{% else %}
-		 <p>No menu sections are available.</p>
+		 <p>No weekdays are available.</p>
 	{% endif %}
 	</section>
 </main>
