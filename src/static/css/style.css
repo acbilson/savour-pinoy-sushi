@@ -97,9 +97,15 @@ ol[role="list"] {
 }
 
 /* prevents the page from going outside the viewport for mobile  */
-html, body {
+
+html {
 	overflow: hidden;
 	overflow-y: auto;
+}
+
+body {
+	overflow: hidden;
+	overflow-y: clip;
 }
 
 /* Set core root defaults */

@@ -22,5 +22,8 @@ class MenuItem(models.Model):
     # the section under which this item appears
     section = models.ForeignKey(MenuSection, on_delete=models.CASCADE)
 
+    # an optional image of the menu item
+    image = models.ImageField(upload_to='menu_images/', blank=True)
+
     def __str__(self):
         return self.name_txt

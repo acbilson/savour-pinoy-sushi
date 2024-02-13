@@ -15,7 +15,7 @@
 	{% if menu_sections %}
 		 {% for section in menu_sections %}
 		 <h2>{{ section.title_txt }}</h2>
-		 <ul role="list">
+		 <ul role="list" class="flow-m">
 			 {% for item in section.menuitem_set.all %}
 			 <li class="spread-between | menu-item">
 				 <div>
@@ -23,7 +23,10 @@
 					 <p>{{ item.desc_txt }}</p>
 				 </div>
 				 <div>
+					 <img class="flag" src="{{ item.image.url }}" />
+					 <!--
 					 <img class="flag" src="../static/menu/images/Flag_of_the_Philippines.svg" />
+					 -->
 				 </div>
 			 </li>
 			 {% endfor %}

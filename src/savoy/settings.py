@@ -28,10 +28,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Both static and media files need to be served by a web proxy like Nginx
+# in production. The dev server will serve them directly for testing.
+
 # Static file route - Added to find global static files in ../static/css/
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/menu_images')
+MEDIA_URL = '/media/'
 
 # Application definition
 
