@@ -5,7 +5,7 @@
 	<nav>
 		<ul role="list" class="spread compress">
 			<li><a href="/menu">Menu</a></li>
-			<li><a href="/locations">Locations</a></li>
+			<li><a href="/location">Locations</a></li>
 			<li><a href="https://facebook.com"><img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" /></a></li>
 		</ul>
 	</nav>
@@ -19,7 +19,7 @@
 			 {% for item in section.menuitem_set.all %}
 			 <li class="spread-between | menu-item">
 				 <div>
-					 <h3>{{ item.title_txt }}</h3>
+					 <h3>{{ item.title_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
 					 <p>{{ item.desc_txt }}</p>
 				 </div>
 				 <div>
@@ -34,7 +34,10 @@
 	{% endif %}
 	</section>
 </main>
-<footer class="wrapper spread-evenly">
-	<div>© {% now "Y" %} Savoy Pinot, LLC</div>
-	<div>Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
+<footer class="wrapper flow-t">
+	<p class="fill-width tiny-text">*CONSUMING RAW OR UNDERCOOKED MEATS, POULTRY, SEAFOOD, SHELLFISH, OR EGGS MAY INCREASE YOUR RISK OF FOODBORNE ILLNESS, ESPECIALLY IF YOU HAVE CERTAIN MEDICAL CONDITIONS.</p>
+	<div class="spread-evenly">
+		<div class="tiny-text">© {% now "Y" %} Savoy Pinot, LLC</div>
+		<div class="tiny-text">Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
+	</div>
 </footer>

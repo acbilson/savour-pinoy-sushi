@@ -1,8 +1,17 @@
 set shell := ["/opt/homebrew/bin/fish", "-c"]
 
+# starts a shell to run commands in context
+shell:
+	python src/manage.py shell
+
 # runs a local development server
 run:
 	python src/manage.py runserver
+
+# instantiates the database
+init: migrate
+	python src/manage.py createsuperuser --username acbilson --email acbilson@gmail.com
+	sqlite3 src/db.sqlite3 < init/init.sql
 
 # run to migrate database when models have changed
 migrate:
@@ -10,7 +19,7 @@ migrate:
 
 # run to generate a new migration when another app is added
 make_migration APP:
-	python src/manage.py makemigration {{ APP }}
+	python src/manage.py makemigrations {{ APP }}
 
 # builds a production image, running integration tests along the way
 build:

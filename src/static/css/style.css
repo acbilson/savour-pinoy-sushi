@@ -441,13 +441,9 @@ select
 /* BLOCKS */
 /**********/
 
-footer > * {
-	font-size: var(--step--2);
-	font-size: var(--step--2);
-
-	> a {
-		font-size: inherit;
-	}
+/* makes footer links the same size as the other text */
+footer * > a {
+	font-size: inherit;
 }
 
 header {
@@ -464,3 +460,17 @@ header {
 .icon {
 	height: var(--step-0);
 }
+
+.tiny-text {
+	font-size: var(--step--2);
+	line-height: var(--step--2);
+}
+
+/**************/
+/* EXCEPTIONS */
+/**************/
+
+.fill-width {
+	max-width: 100%;
+}
+

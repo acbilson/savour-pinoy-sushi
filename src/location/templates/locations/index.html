@@ -1,0 +1,48 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<header class="wrapper">
+	<nav>
+		<ul role="list" class="spread compress">
+			<li><a href="/menu">Menu</a></li>
+			<li><a href="/location">Locations</a></li>
+			<li><a href="https://facebook.com"><img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" /></a></li>
+		</ul>
+	</nav>
+</header>
+<main class="flow-l wrapper">
+{% if location_weekdays %}
+	{% for day in location_weekdays %}
+		<section class="flow-m">
+		<h2>{{ day.weekday_txt }}</h2>
+		<ul role="list">
+		{% if day.locationstop_set %}
+			<table>
+				<thead>
+					<tr>
+						<th>Location</th>
+						<th>Hours</th>
+					</tr>
+				</thead>
+				<tbody>
+			{% for stop in day.locationstop_set.all %}
+				<tr>
+					<td>{{ stop.location_txt }}</td>
+					<td>{{ stop.hours_txt }}</td>
+				</tr>
+			{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+		</section>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No weekdays are available.</p>
+{% endif %}
+</main>
+<footer class="wrapper">
+	<div class="spread-evenly">
+		<div>© {% now "Y" %} Savoy Pinot, LLC</div>
+		<div>Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
+	</div>
+</footer>

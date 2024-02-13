@@ -36,7 +36,7 @@ STATICFILES_DIRS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "locations.apps.LocationsConfig",
+    "location.apps.LocationConfig",
     "menu.apps.MenuConfig",
     "django.contrib.admin",
     "django.contrib.auth",
