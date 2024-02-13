@@ -1,46 +1,36 @@
+{% extends "base/index.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'menu/style.css' %}">
-<header class="wrapper">
-	<nav>
-		<ul role="list" class="spread compress">
-			<li><a href="/menu">Menu</a></li>
-			<li><a href="/location">Locations</a></li>
-			<li><a href="https://facebook.com"><img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" /></a></li>
-		</ul>
-	</nav>
-</header>
-<main class="flow-l wrapper">
-	<section class="flow-m">
-	{% if menu_sections %}
-		 {% for section in menu_sections %}
-		 <h2>{{ section.title_txt }}</h2>
-		 <ul role="list" class="flow-m">
-			 {% for item in section.menuitem_set.all %}
-			 <li class="spread-between | menu-item">
-				 <div>
-					 <h3>{{ item.title_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
-					 <p>{{ item.desc_txt }}</p>
-				 </div>
-				 <div>
-					 <img class="flag" src="{{ item.image.url }}" />
-					 <!--
-					 <img class="flag" src="../static/menu/images/Flag_of_the_Philippines.svg" />
-					 -->
-				 </div>
-			 </li>
-			 {% endfor %}
+{% endblock %}
+
+{% block content %}
+<section class="flow-m">
+{% if menu_sections %}
+	 {% for section in menu_sections %}
+	 <h2>{{ section.title_txt }}</h2>
+	 <ul role="list" class="flow-m">
+		 {% for item in section.menuitem_set.all %}
+		 <li class="spread-between | menu-item">
+			 <div>
+				 <h3>{{ item.title_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
+				 <p>{{ item.desc_txt }}</p>
+			 </div>
+			 <div>
+				 {% if item.image %}
+				 <img src="{{ item.image.url }}" />
+				 {% endif %}
+			 </div>
+		 </li>
 		 {% endfor %}
-		 </ul>
-	{% else %}
-		 <p>No menu sections are available.</p>
-	{% endif %}
-	</section>
-</main>
-<footer class="wrapper flow-t">
-	<p class="fill-width tiny-text">*CONSUMING RAW OR UNDERCOOKED MEATS, POULTRY, SEAFOOD, SHELLFISH, OR EGGS MAY INCREASE YOUR RISK OF FOODBORNE ILLNESS, ESPECIALLY IF YOU HAVE CERTAIN MEDICAL CONDITIONS.</p>
-	<div class="spread-evenly">
-		<div class="tiny-text">© {% now "Y" %} Savoy Pinot, LLC</div>
-		<div class="tiny-text">Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
-	</div>
-</footer>
+	 {% endfor %}
+	 </ul>
+{% else %}
+	 <p>No menu sections are available.</p>
+{% endif %}
+</section>
+{% endblock %}
+
+{% block footer %}
+<p class="fill-width tiny-text">*CONSUMING RAW OR UNDERCOOKED MEATS, POULTRY, SEAFOOD, SHELLFISH, OR EGGS MAY INCREASE YOUR RISK OF FOODBORNE ILLNESS, ESPECIALLY IF YOU HAVE CERTAIN MEDICAL CONDITIONS.</p>
+{% endblock %}

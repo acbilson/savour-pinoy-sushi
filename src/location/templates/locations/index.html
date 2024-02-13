@@ -1,15 +1,6 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-<header class="wrapper">
-	<nav>
-		<ul role="list" class="spread compress">
-			<li><a href="/menu">Menu</a></li>
-			<li><a href="/location">Locations</a></li>
-			<li><a href="https://facebook.com"><img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" /></a></li>
-		</ul>
-	</nav>
-</header>
-<main class="flow-l wrapper">
+{% extends "base/index.html" %}
+
+{% block content %}
 {% if location_weekdays %}
 	{% for day in location_weekdays %}
 		<section class="flow-m">
@@ -39,10 +30,4 @@
 {% else %}
 	<p>No weekdays are available.</p>
 {% endif %}
-</main>
-<footer class="wrapper">
-	<div class="spread-evenly">
-		<div>© {% now "Y" %} Savoy Pinot, LLC</div>
-		<div>Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
-	</div>
-</footer>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	{% block head %}{% endblock %}
+</head>
+
+<header class="wrapper">
+	<nav>
+		<ul role="list" class="spread compress">
+			<li><a href="{% url 'home:index' %}">Home</a></li>
+			<li><a href="{% url 'menu:index' %}">Menu</a></li>
+			<li><a href="{% url 'location:index' %}">Locations</a></li>
+			<li>
+				<a href="https://facebook.com">
+					<img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" />
+				</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<main class="flow-l wrapper">
+	{% block content %}{% endblock %}
+</main>
+
+<footer class="wrapper flow-t">
+	<div class="footer-content">
+		{% block footer %}{% endblock %}
+	</div>
+	<div class="spread-evenly">
+		<div class="tiny-text">© {% now "Y" %} Savoy Pinot, LLC</div>
+		<div class="tiny-text">Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
+	</div>
+</footer>

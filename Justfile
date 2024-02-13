@@ -21,6 +21,14 @@ migrate:
 make_migration APP:
 	python src/manage.py makemigrations {{ APP }}
 
+# collect all static assets to STATIC_ROOT
+collect_static:
+	python src/manage.py collectstatic
+
+# adds a new app to the project
+newapp APP:
+	python src/manage.py startapp {{ APP }}
+
 # builds a production image, running integration tests along the way
 build:
   set COMMIT_ID (git rev-parse --short HEAD); \
