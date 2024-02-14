@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 if DEBUG:
@@ -42,8 +42,8 @@ STATICFILES_DIRS = [
 # set to the location where static files should collect
 
 if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, '../static')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/menu_images')
+    STATIC_ROOT = os.path.join(BASE_DIR, '../mnt/static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, '../mnt/media')
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
 else:
