@@ -11,23 +11,50 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+from os import environ
 from pathlib import Path
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-if DEBUG:
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = environ.get("DJANGO_DEBUG")
+
+if DEBUG is True or DEBUG == "True":
+    print("running in debug mode")
     BASE_DIR = Path(__file__).resolve().parent.parent
+    ALLOWED_HOSTS = []
+
+    STATIC_ROOT = os.path.join(BASE_DIR, environ.get("DJANGO_STATIC_ROOT_DEV", ""))
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'dbg/media')
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+
+    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
+
 else:
-    BASE_DIR = Path(__file__).resolve()
+    print("running in production mode")
+    BASE_DIR = Path(__file__).resolve().parent
+    ALLOWED_HOSTS = [environ.get("DJANGO_STATIC_HOST")]
+
+    STATIC_ROOT = environ.get("DJANGO_STATIC_ROOT")
+    MEDIA_ROOT = environ.get("DJANGO_MEDIA_ROOT")
+    STATIC_URL = environ.get("DJANGO_STATIC_URL")
+    MEDIA_URL = environ.get("DJANGO_MEDIA_URL")
+
+    DB_PATH = environ.get("DJANGO_DB_PATH")
+
+print(f"DEBUG: {DEBUG}")
+print(f"BASE_DIR: {BASE_DIR}")
+print(f"STATIC_ROOT: {STATIC_ROOT}")
+print(f"MEDIA_ROOT: {MEDIA_ROOT}")
+print(f"STATIC_URL: {STATIC_URL}")
+print(f"MEDIA_URL: {MEDIA_URL}")
+print(f"DB_PATH: {DB_PATH}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r5qu-$s*4-q886-in9_sg)8=-5s8!pgw0ws%x@w)jnc6apbm%1"
-
 
 ALLOWED_HOSTS = ['localhost']
 
@@ -38,20 +65,6 @@ ALLOWED_HOSTS = ['localhost']
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-# set to the location where static files should collect
-
-if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, '../mnt/static')
-    MEDIA_ROOT = os.path.join(BASE_DIR, '../mnt/media')
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
-else:
-    STATIC_ROOT = '/mnt/static'
-    MEDIA_ROOT = '/mnt/media'
-    STATIC_URL = 'http://localhost:5000/static/'
-    MEDIA_URL = 'http://localhost:5000/media/'
-
 
 # Application definition
 
@@ -100,11 +113,6 @@ WSGI_APPLICATION = "savoy.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-if DEBUG:
-    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
-else:
-    DB_PATH = '/mnt/db/db.sqlite3'
 
 DATABASES = {
     "default": {

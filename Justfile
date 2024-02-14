@@ -1,3 +1,4 @@
+set dotenv-load
 set shell := ["/opt/homebrew/bin/fish", "-c"]
 
 # starts a shell to run commands in context
@@ -6,6 +7,7 @@ shell:
 
 # runs a local development server
 run:
+	set -x DJANGO_DEBUG True
 	python src/manage.py runserver
 
 # instantiates the database
@@ -21,8 +23,9 @@ migrate:
 make_migration APP:
 	python src/manage.py makemigrations {{ APP }}
 
-# collect all static assets to STATIC_ROOT. Be sure you run this only when DEBUG = true
+# collect all static assets to STATIC_ROOT
 collect_static:
+	set -x DJANGO_DEBUG True; \
 	python src/manage.py collectstatic
 
 # adds a new app to the project
@@ -42,7 +45,7 @@ clean_prod:
 
 # configures the local environment for production
 init_prod: clean_prod
-	mkdir -p mnt/{db,static,media}
+	mkdir -p mnt/{db,media}
 	cp -f src/db.sqlite3 mnt/db/
 
 # starts an nginx server to serve static and media assets
@@ -52,14 +55,18 @@ start_nginx:
   -v /Users/alexbilson/source/savoy-pinot/mnt:/usr/share/nginx/html:ro \
   --name savoy-nginx \
   nginx:latest
-  #-v /Users/alexbilson/source/savoy-pinot/media:/usr/share/nginx/html:ro \
 
 # starts the production image
 start: init_prod collect_static start_nginx
-  # serves the savoy app
   podman run --rm \
   --expose 8000 -p 8000:8000 \
   -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
   -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
+  -e DJANGO_DEBUG=False \
+  -e DJANGO_STATIC_ROOT=$DJANGO_STATIC_ROOT_PRD \
+  -e DJANGO_MEDIA_ROOT=$DJANGO_MEDIA_ROOT_PRD \
+  -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
+  -e DJANGO_MEDIA_URL=$DJANGO_MEDIA_URL_PRD \
+  -e DJANGO_DB_PATH=$DJANGO_DB_PATH_PRD \
   --name savoy \
   acbilson/savoy:latest
