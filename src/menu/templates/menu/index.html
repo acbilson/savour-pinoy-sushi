@@ -13,7 +13,7 @@
 		 {% for item in section.menuitem_set.all %}
 		 <li class="spread-between | menu-item">
 			 <div>
-				 <h3>{{ item.title_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
+				 <h3>{{ item.display_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
 				 <p>{{ item.desc_txt }}</p>
 			 </div>
 			 <div>

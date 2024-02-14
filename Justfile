@@ -40,6 +40,9 @@ build:
 start:
   podman run --rm \
   --expose 8000 -p 8000:8000 \
+  -v /Users/alexbilson/source/savoy-pinot/static:/mnt/static \
+  -v /Users/alexbilson/source/savoy-pinot/db:/mnt/db \
+  -v /Users/alexbilson/source/savoy-pinot/media:/mnt/media \
   --name savoy \
   acbilson/savoy:latest
 

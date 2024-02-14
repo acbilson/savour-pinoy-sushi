@@ -49,6 +49,11 @@ ENV IS_DOCKER 1
 # Production
 ############
 
+# mount image volumes here
+RUN mkdir -p /mnt/media/
+RUN mkdir -p /mnt/static/
+RUN mkdir -p /mnt/db/
+
 # TODO: run migrations and user configuration here
 
 FROM test as prod

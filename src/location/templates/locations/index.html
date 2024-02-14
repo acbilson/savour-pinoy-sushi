@@ -17,7 +17,7 @@
 				<tbody>
 			{% for stop in day.locationstop_set.all %}
 				<tr>
-					<td>{{ stop.location_txt }}</td>
+					<td>{{ stop.display_txt }}</td>
 					<td>{{ stop.hours_txt }}</td>
 				</tr>
 			{% endfor %}

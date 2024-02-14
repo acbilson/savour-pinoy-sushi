@@ -11,7 +11,7 @@ class MenuItem(models.Model):
     name_txt = models.CharField(max_length=100)
 
     # the item's name on the website
-    title_txt = models.CharField(max_length=100)
+    display_txt = models.CharField(max_length=100)
 
     # a description of the item
     desc_txt = models.CharField(max_length=200)

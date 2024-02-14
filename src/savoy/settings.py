@@ -36,7 +36,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/menu_images')
+if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, '../static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/menu_images')
+else:
+    STATIC_ROOT = "/mnt/static"
+    MEDIA_ROOT = "mnt/media"
+
 MEDIA_URL = '/media/'
 
 # Application definition
