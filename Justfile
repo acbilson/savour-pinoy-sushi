@@ -36,13 +36,21 @@ build:
   -t acbilson/savoy:latest \
   -t acbilson/savoy:$COMMIT_ID .
 
+# starts an nginx server to serve static and media assets
+start_nginx:
+  podman run --rm \
+  --expose 5000 -p 5000:80 \
+  -v /Users/alexbilson/source/savoy-pinot/mnt:/usr/share/nginx/html:ro \
+  --name savoy-nginx \
+  nginx:latest
+  #-v /Users/alexbilson/source/savoy-pinot/media:/usr/share/nginx/html:ro \
+
 # starts the production image
 start:
+  # serves the savoy app
   podman run --rm \
   --expose 8000 -p 8000:8000 \
-  -v /Users/alexbilson/source/savoy-pinot/static:/mnt/static \
-  -v /Users/alexbilson/source/savoy-pinot/db:/mnt/db \
-  -v /Users/alexbilson/source/savoy-pinot/media:/mnt/media \
+  -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
+  -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
   --name savoy \
   acbilson/savoy:latest
-

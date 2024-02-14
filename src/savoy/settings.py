@@ -13,9 +13,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+if DEBUG:
+    BASE_DIR = Path(__file__).resolve().parent.parent
+else:
+    BASE_DIR = Path(__file__).resolve()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -23,10 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r5qu-$s*4-q886-in9_sg)8=-5s8!pgw0ws%x@w)jnc6apbm%1"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # Both static and media files need to be served by a web proxy like Nginx
 # in production. The dev server will serve them directly for testing.
@@ -36,14 +39,19 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# set to the location where static files should collect
+
 if DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, '../static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'static/menu_images')
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
 else:
-    STATIC_ROOT = "/mnt/static"
-    MEDIA_ROOT = "mnt/media"
+    STATIC_ROOT = '/mnt/static'
+    MEDIA_ROOT = '/mnt/media'
+    STATIC_URL = 'http://localhost:5000/static/'
+    MEDIA_URL = 'http://localhost:5000/media/'
 
-MEDIA_URL = '/media/'
 
 # Application definition
 
@@ -93,10 +101,15 @@ WSGI_APPLICATION = "savoy.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+if DEBUG:
+    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
+else:
+    DB_PATH = '/mnt/db/db.sqlite3'
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DB_PATH,
     }
 }
 
@@ -131,13 +144,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-# set to the location where static files should collect
-#STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
