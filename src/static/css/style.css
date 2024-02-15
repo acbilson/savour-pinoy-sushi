@@ -155,7 +155,6 @@ select {
 /* my baseline */
 
 * {
-	font-size: var(--step-0);
 	color: var(--color-primary);
 	border-color: var(--color-stroke);
 }
@@ -197,6 +196,11 @@ input[disabled] {
 }
 
 /* generates headers on a scale */
+
+p, ul, ol {
+	font-size: var(--step-0);
+}
+
 
 h1 {
 	font-size: var(--step-5);
@@ -368,6 +372,11 @@ select
 	display: block;
 }
 
+/* makes links more obvious */
+a:hover {
+	text-decoration: none;
+}
+
 
 /*************/
 /* UTILITIES */
@@ -445,15 +454,21 @@ select
 /**********/
 
 /* makes footer links the same size as the other text */
-footer * > a {
-	font-size: inherit;
+footer
+{
+	p, ul, ol {
+		max-width: 100%;
+		font-size: var(--step--2);
+		line-height: var(--step--2);
+	}
+
+	* > a {
+		font-size: inherit;
+	}
 }
 
 header {
 	nav {
-		a:hover {
-			text-decoration: none;
-		}
 		.icon:hover {
 			transform: scale(1.1);
 		}
@@ -462,11 +477,6 @@ header {
 
 .icon {
 	height: var(--step-0);
-}
-
-.tiny-text {
-	font-size: var(--step--2);
-	line-height: var(--step--2);
 }
 
 .flag {

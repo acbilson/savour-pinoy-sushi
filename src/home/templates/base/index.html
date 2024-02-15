@@ -34,13 +34,14 @@
 	{% block content %}{% endblock %}
 </main>
 
-<footer class="wrapper flow-t">
-	<div class="footer-content">
+<footer class="wrapper flow-s">
+	<div>
 		{% block footer %}{% endblock %}
 	</div>
-	<div class="spread-evenly">
-		<div class="tiny-text">© {% now "Y" %} Savoy Pinot, LLC</div>
-		<div class="tiny-text">Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></div>
-	</div>
+	<ul class="spread-evenly" role="list">
+		<li><span>© {% now "Y" %} Savoy Pinot, LLC</span></li>
+		<li><span>Made with joy by <a href="https://alexbilson.dev">Alex Bilson</a></span></li>
+		<li><a href="{% url 'admin:index' %}">Admin</a></li>
+	</ul>
 </footer>
 </html>
