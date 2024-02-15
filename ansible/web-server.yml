@@ -1,0 +1,7 @@
+---
+- name: Prepare production machine to host my chaos suite
+  hosts: web
+  user: abilson
+  become: true
+  roles:
+    - savoy_pinot

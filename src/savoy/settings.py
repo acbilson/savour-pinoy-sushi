@@ -23,7 +23,7 @@ if DEBUG is True or DEBUG == "True":
     BASE_DIR = Path(__file__).resolve().parent.parent
     ALLOWED_HOSTS = []
 
-    STATIC_ROOT = os.path.join(BASE_DIR, environ.get("DJANGO_STATIC_ROOT_DEV", ""))
+    STATIC_ROOT = os.path.join(BASE_DIR, 'dbg/static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'dbg/media')
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'

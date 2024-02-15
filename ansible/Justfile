@@ -1,0 +1,11 @@
+# runs a simple Ansible ad-hoc command to test the connection
+test-connection:
+	ansible -i host.ini --vault-password-file=.vault_pass -u abilson vultr -m ping
+
+# edits the encrypted group variables
+edit-vault:
+	ansible-vault edit --vault-password-file=.vault_pass group_vars/web/vault.yml
+
+# runs whatever playbook is selected on prod web server(s)
+play PLAYBOOK:
+	ansible-playbook -i prod.ini --vault-password-file=.vault_pass --skip-tags onetime {{PLAYBOOK}}.yml

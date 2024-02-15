@@ -25,8 +25,8 @@ make_migration APP:
 
 # collect all static assets to STATIC_ROOT
 collect_static:
-	set -x DJANGO_DEBUG True; \
-	python src/manage.py collectstatic
+	set -x DJANGO_DEBUG True
+	python src/manage.py collectstatic --no-input
 
 # adds a new app to the project
 newapp APP:
@@ -44,9 +44,10 @@ clean_prod:
 	rm -rf mnt
 
 # configures the local environment for production
-init_prod: clean_prod
+init_prod: clean_prod collect_static
 	mkdir -p mnt/{db,media}
 	cp -f src/db.sqlite3 mnt/db/
+	cp -r src/dbg/static mnt/static
 
 # starts an nginx server to serve static and media assets
 start_nginx:
@@ -57,7 +58,7 @@ start_nginx:
   nginx:latest
 
 # starts the production image
-start: init_prod collect_static start_nginx
+start: init_prod start_nginx
   podman run --rm \
   --expose 8000 -p 8000:8000 \
   -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \

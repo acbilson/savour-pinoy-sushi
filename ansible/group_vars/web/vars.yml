@@ -1,0 +1,12 @@
+---
+# ANSIBLE
+ansible_port: '22'
+ansible_python_interpreter: auto_silent
+
+# GLOBAL
+# -------
+g_user: abilson
+g_host: alexbilson.dev
+g_mnt_path: /mnt
+g_site_path: /srv
+g_src_path: /opt/src

@@ -1,0 +1,16 @@
+---
+chaos_name: micropub
+repo_name: chaos-micropub
+image_name: localhost/acbilson/micropub:latest
+server_name: "pub.{{ g_host }}"
+exposed_port: 3000
+content_path: /mnt/chaos/content
+image_path: /mnt/images/alexbilson
+mastodon_host: https://indieweb.social
+
+admin_user: "{{ VAULT_MICROPUB_ADMIN_USER }}"
+admin_password: "{{ VAULT_MICROPUB_ADMIN_PASSWORD }}"
+flask_secret_key: "{{ VAULT_MICROPUB_FLASK_SECRET_KEY }}"
+session_secret: "{{ VAULT_MICROPUB_SESSION_SECRET }}"
+mastodon_client_id: "{{ VAULT_MICROPUB_MASTODON_CLIENT_ID }}"
+mastodon_client_secret: "{{ VAULT_MICROPUB_MASTODON_CLIENT_SECRET }}"
