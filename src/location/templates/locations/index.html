@@ -1,33 +1,30 @@
 {% extends "base/index.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'location/style.css' %}">
+{% endblock %}
+
 
 {% block content %}
-{% if location_weekdays %}
-	{% for day in location_weekdays %}
-		<section class="flow-m">
-		<h2>{{ day.weekday_txt }}</h2>
-		<ul role="list">
-		{% if day.locationstop_set %}
-			<table>
-				<thead>
-					<tr>
-						<th>Location</th>
-						<th>Hours</th>
-					</tr>
-				</thead>
-				<tbody>
-			{% for stop in day.locationstop_set.all %}
-				<tr>
-					<td>{{ stop.display_txt }}</td>
-					<td>{{ stop.hours_txt }}</td>
-				</tr>
-			{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-		</section>
+{% if stops %}
+	<h2>Stops</h2>
+	<ol role="list" class="stops">
+		<li>
+			<div>Date</div>
+			<div>Location</div>
+			<div>Address</div>
+			<div>Hours</div>
+		</li>
+	{% for stop in stops %}
+		<li>
+			<div>{{ stop.date }}</div>
+			<div>{{ stop.location }}</div>
+			<div>{{ stop.address }}</div>
+			<div>{{ stop.hours }}</div>
+		</li>
 	{% endfor %}
-	</ul>
+	</ol>
 {% else %}
-	<p>No weekdays are available.</p>
+	<p>No stops are available.</p>
 {% endif %}
 {% endblock %}

@@ -1,29 +1,37 @@
 from django.db import models
 
 class MenuSection(models.Model):
-    title_txt = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.title_txt
-
-class MenuItem(models.Model):
-    # an admin-only identifier for the item
-    name_txt = models.CharField(max_length=100)
-
-    # the item's name on the website
+    # the section's name on the website
     display_txt = models.CharField(max_length=100)
 
-    # a description of the item
+    # a description or notes about the section
     desc_txt = models.CharField(max_length=200)
 
     # does the raw food disclaimer apply
     raw_disclaimer = models.BooleanField()
 
+    def __str__(self):
+        return self.display_txt
+
+class MenuItem(models.Model):
+    # the item's name on the website
+    display_txt = models.CharField(max_length=100)
+
+    # a description or notes about the item
+    desc_txt = models.CharField(max_length=200, null=True)
+
+    # the current price of the item
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+
+    # does the raw food disclaimer apply
+    raw_disclaimer = models.BooleanField(default=False)
+
     # the section under which this item appears
     section = models.ForeignKey(MenuSection, on_delete=models.CASCADE)
 
     # an optional image of the menu item
-    image = models.ImageField(upload_to='menu_images/', blank=True)
+    image = models.ImageField(upload_to='menu_images/', null=True)
 
     def __str__(self):
-        return self.name_txt
+        return self.display_txt

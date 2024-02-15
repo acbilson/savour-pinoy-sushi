@@ -1,35 +1,35 @@
 from django.db import models
 
-WEEKDAYS = {
-    "SAT": "Saturday",
-    "SUN": "Sunday",
-    "MON": "Monday",
-    "TUE": "Tuesday",
-    "WED": "Wednesday",
-    "THU": "Thursday",
-    "FRI": "Friday",
-}
 
-class LocationWeekday(models.Model):
-    weekday_txt = models.CharField(max_length=3, choices=WEEKDAYS)
+class LocationSetting(models.Model):
+
+    # number of days to display in the past
+    display_days_back = models.IntegerField()
 
     def __str__(self):
-        return self.weekday_txt
+        return 'Location Settings'
 
-# Create your models here.
+class LocationDestination(models.Model):
+    # the location's name on the website
+    display_txt = models.CharField(max_length=100)
+
+    # the location's address on the website
+    addr_txt = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.display_txt
+
+
 class LocationStop(models.Model):
-    # an admin-only identifier for the stop
-    name_txt = models.CharField(max_length=200)
-
-    # the stop's name on the website
-    display_txt = models.CharField(max_length=200)
-
-    # a selection of one ore more days that the food
-    # truck is at this stop
-    weekdays = models.ManyToManyField(LocationWeekday)
+    # when the truck will be at this location
+    stop_dt = models.DateField()
 
     # the hours that the food truck is at this stop
-    hours_txt = models.CharField(max_length=200)
+    hours_txt = models.CharField(max_length=100)
+
+    # where the truck will be located
+    location = models.ForeignKey(LocationDestination, on_delete=models.CASCADE)
+
 
     def __str__(self):
-        return self.name_txt
+        return f"{str(self.location)} on {self.stop_dt}"
