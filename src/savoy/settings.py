@@ -34,7 +34,7 @@ if DEBUG is True or DEBUG == "True":
 else:
     print("running in production mode")
     BASE_DIR = Path(__file__).resolve().parent
-    ALLOWED_HOSTS = [environ.get("DJANGO_STATIC_HOST")]
+    ALLOWED_HOSTS = [environ.get("DJANGO_HOST")]
     SECRET_KEY = environ.get("DJANGO_SESSION_SECRET")
 
     STATIC_ROOT = environ.get("DJANGO_STATIC_ROOT")
@@ -45,6 +45,7 @@ else:
     DB_ROOT = environ.get("DJANGO_DB_ROOT")
 
 print(f"DEBUG: {DEBUG}")
+print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 print(f"BASE_DIR: {BASE_DIR}")
 print(f"STATIC_ROOT: {STATIC_ROOT}")
 print(f"MEDIA_ROOT: {MEDIA_ROOT}")

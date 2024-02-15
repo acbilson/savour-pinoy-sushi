@@ -7,7 +7,7 @@ exposed_port: 8450
 
 static_root: /mnt/images/savoy/static
 media_root: /mnt/images/savoy/media
-db_root: /mnt/savoy/db/
+db_root: /mnt/savoy/db
 
 static_url: "savoy-demo.{{ g_host }}/static/"
 media_url: "savoy-demo.{{ g_host }}/media/"

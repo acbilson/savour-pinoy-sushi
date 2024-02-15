@@ -20,6 +20,7 @@ ExecStart=/usr/bin/podman run \
 --replace --rm -d \
 --expose {{ exposed_port }} -p {{ exposed_port }}:80 \
 -e "DJANGO_DEBUG=False" \
+-e "DJANGO_HOST={{ server_name }}" \
 -e "DJANGO_STATIC_ROOT={{ static_root }}" \
 -e "DJANGO_MEDIA_ROOT={{ media_root }}" \
 -e "DJANGO_DB_ROOT={{ db_root }}" \

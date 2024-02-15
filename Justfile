@@ -65,6 +65,7 @@ start: init_prod start_nginx
   -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
   -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
   -e DJANGO_DEBUG=False \
+  -e DJANGO_HOST=$DJANGO_HOST_PRD \
   -e DJANGO_STATIC_ROOT=$DJANGO_STATIC_ROOT_PRD \
   -e DJANGO_MEDIA_ROOT=$DJANGO_MEDIA_ROOT_PRD \
   -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
