@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
 <head>
@@ -10,7 +11,6 @@
   <!-- TODO: add favicon -->
   <link rel="shortcut icon" href="" />
 
-	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	{% block head %}{% endblock %}
 </head>
@@ -23,7 +23,7 @@
 			<li><a href="{% url 'location:index' %}">Locations</a></li>
 			<li>
 				<a href="https://facebook.com">
-					<img class="icon" src="../static/menu/images/2021_Facebook_icon.svg" />
+					<img class="icon" src="{% static 'home/images/2021_Facebook_icon.svg' %}" />
 				</a>
 			</li>
 		</ul>

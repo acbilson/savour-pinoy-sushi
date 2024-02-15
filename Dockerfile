@@ -53,8 +53,6 @@ ENV IS_DOCKER 1
 RUN mkdir -p /mnt/media/
 RUN mkdir -p /mnt/db/
 
-# TODO: run migrations and user configuration here
-
 FROM test as prod
 WORKDIR /app/savoy
 

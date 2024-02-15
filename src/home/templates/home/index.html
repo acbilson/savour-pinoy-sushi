@@ -2,5 +2,6 @@
 
 {% block content %}
 <h1>Welcome to Savoy Pinot!</h1>
-<img class="flag" src="../static/menu/images/Flag_of_the_Philippines.svg" />
+{% load static %}
+<img class="flag" src="{% static 'home/images/Flag_of_the_Philippines.svg' %}" />
 {% endblock %}
