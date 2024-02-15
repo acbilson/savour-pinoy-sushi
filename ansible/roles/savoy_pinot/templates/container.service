@@ -19,11 +19,10 @@ ExecStart=/usr/bin/podman run \
 --cgroups=no-conmon \
 --replace --rm -d \
 --expose {{ exposed_port }} -p {{ exposed_port }}:80 \
--e "DJANGO_DEBUG=False" \
 -e "DJANGO_HOST={{ server_name }}" \
 -e "DJANGO_STATIC_ROOT={{ static_root }}" \
--e "DJANGO_MEDIA_ROOT={{ media_root }}" \
--e "DJANGO_DB_ROOT={{ db_root }}" \
+-e "DJANGO_MEDIA_ROOT=/mnt/media" \
+-e "DJANGO_DB_ROOT=/mnt/db" \
 -e "DJANGO_STATIC_URL={{ static_url }}" \
 -e "DJANGO_MEDIA_URL={{ media_url }}" \
 -e "DJANGO_SESSION_SECRET={{ session_secret }}" \

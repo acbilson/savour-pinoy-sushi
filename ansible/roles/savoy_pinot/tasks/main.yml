@@ -68,11 +68,11 @@
     src: nginx.conf
     dest: '/etc/nginx/sites-available/{{ project_name }}.conf'
     mode: '0644'
+  notify:
+    - Restart nginx
 
 - name: Enable proxy
   ansible.builtin.file:
     src: '/etc/nginx/sites-available/{{ project_name }}.conf'
     dest: '/etc/nginx/sites-enabled/{{ project_name }}.conf'
     state: link
-  notify:
-    - Restart nginx

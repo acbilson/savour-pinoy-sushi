@@ -16,7 +16,7 @@ from pathlib import Path
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = environ.get("DJANGO_DEBUG")
+DEBUG = environ.get("DJANGO_DEBUG", False)
 
 if DEBUG is True or DEBUG == "True":
     print("running in debug mode")

@@ -11,7 +11,7 @@ run:
 	python src/manage.py runserver
 
 # instantiates the database
-init: migrate
+init_db: migrate
 	python src/manage.py createsuperuser --username acbilson --email acbilson@gmail.com
 	sqlite3 src/db.sqlite3 < init/init.sql
 
@@ -43,6 +43,7 @@ build: clean
 clean:
 	rm -rf mnt
 	rm -rf src/dbg
+	rm -rf deploy
 
 # configures the local environment for production
 init_prod: clean collect_static
@@ -74,6 +75,12 @@ start: init_prod start_nginx
   --name savoy \
   acbilson/savoy:latest
 
+# configures the local environment for deployment. DOES NOT SEND ADMIN FILES
+init_deploy: clean collect_static
+	mkdir -p deploy/static
+	cp -r src/dbg/static/{css,menu,home} deploy/static/
+	scp -r deploy/static vultr:/srv/savoy
+
 # runs a simple ansible ad-hoc command to test the connection
 test-connection:
 	ansible -i ansible/prod.ini --vault-password-file=ansible/.vault_pass -u abilson vultr -m ping
@@ -83,5 +90,5 @@ edit-vault:
 	ansible-vault edit --vault-password-file=ansible/.vault_pass ansible/group_vars/web/vault.yml
 
 # runs the ansible deployment playbook
-deploy:
+deploy: init_deploy
 	ansible-playbook -i ansible/prod.ini --vault-password-file=ansible/.vault_pass --skip-tags onetime ansible/deploy.yml
