@@ -1,0 +1,8 @@
+---
+- name: Restart service
+  ansible.builtin.systemd:
+    name: 'container-{{ project_name }}'
+    state: restarted
+    daemon_reload: true
+    scope: user
+  become_user: '{{ g_user }}'

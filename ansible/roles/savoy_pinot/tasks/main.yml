@@ -21,11 +21,13 @@
 - name: Build the Podman image
   containers.podman.podman_image:
     name: '{{ image_name }}'
-    path: '{{ g_src_path }}/{{ project_name }}'
+    path: '{{ g_src_path }}/{{ repo_name }}'
     state: build
     build:
       format: docker
   become_user: '{{ g_user }}'
+  notify:
+    - Restart service
 
 - name: Create static volume directories
   ansible.builtin.file:

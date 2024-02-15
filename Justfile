@@ -92,3 +92,7 @@ edit-vault:
 # runs the ansible deployment playbook
 deploy: init_deploy
 	ansible-playbook -i ansible/prod.ini --vault-password-file=ansible/.vault_pass --skip-tags onetime ansible/deploy.yml
+
+# redeploys the image
+redeploy: init_deploy
+	ansible-playbook -i ansible/prod.ini --vault-password-file=ansible/.vault_pass --skip-tags onetime ansible/redeploy.yml

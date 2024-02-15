@@ -1,0 +1,22 @@
+---
+- name: Clone repo
+  ansible.builtin.git:
+    repo: "git@github.com:acbilson/{{ repo_name }}.git"
+    dest: "{{ g_src_path }}/{{ repo_name }}"
+    depth: 1
+    single_branch: true
+    version: main
+    key_file: '{{ g_mnt_path }}/git/git_rsa'
+  become_user: '{{ g_user }}'
+
+- name: Build the Podman image
+  containers.podman.podman_image:
+    name: '{{ image_name }}'
+    path: '{{ g_src_path }}/{{ repo_name }}'
+    state: build
+    force: true
+    build:
+      format: docker
+  become_user: '{{ g_user }}'
+  notify:
+    - Restart service
