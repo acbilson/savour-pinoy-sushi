@@ -1,8 +1,8 @@
 ---
 - name: Add systemd unit file
   ansible.builtin.template:
-    src: 'container-{{ chaos_name }}.service'
-    dest: '/home/{{ g_user }}/.config/systemd/user/'
+    src: container.service
+    dest: '/home/{{ g_user }}/.config/systemd/user/container-{{ project_name }}.service'
     owner: '{{ g_user }}'
     mode: '0644'
   notify:
@@ -10,8 +10,8 @@
 
 - name: Clone repo
   ansible.builtin.git:
-    repo: "git@github.com:acbilson/chaos-{{ chaos_name }}.git"
-    dest: "{{ g_src_path }}/chaos-{{ chaos_name }}"
+    repo: "git@github.com:acbilson/{{ repo_name }}.git"
+    dest: "{{ g_src_path }}/{{ repo_name }}"
     depth: 1
     single_branch: true
     version: main
@@ -20,15 +20,15 @@
 
 - name: Build the Podman image
   containers.podman.podman_image:
-    name: 'localhost/acbilson/{{ chaos_name }}:latest'
-    path: '{{ g_src_path }}/chaos-{{ chaos_name }}'
+    name: '{{ image_name }}'
+    path: '{{ g_src_path }}/{{ project_name }}'
     build:
       format: docker
   become_user: '{{ g_user }}'
 
 - name: Enable service
   ansible.builtin.systemd:
-    name: 'container-{{ chaos_name }}'
+    name: 'container-{{ project_name }}'
     state: started
     enabled: true
     daemon_reload: true
@@ -37,24 +37,20 @@
 
 - name: Create a log directory
   ansible.builtin.file:
-    path: '/var/log/nginx/{{ chaos_name }}'
+    path: '/var/log/nginx/{{ project_name }}'
     state: directory
     mode: '0755'
 
 - name: Add Nginx config
   ansible.builtin.template:
-    src: '{{ chaos_name }}.conf'
-    dest: '/etc/nginx/sites-available/{{ repo_name }}.conf'
+    src: nginx.conf
+    dest: '/etc/nginx/sites-available/{{ project_name }}.conf'
     mode: '0644'
 
 - name: Enable proxy
   ansible.builtin.file:
-    src: '/etc/nginx/sites-available/{{ repo_name }}.conf'
-    dest: '/etc/nginx/sites-enabled/{{ repo_name }}.conf'
+    src: '/etc/nginx/sites-available/{{ project_name }}.conf'
+    dest: '/etc/nginx/sites-enabled/{{ project_name }}.conf'
     state: link
   notify:
     - Restart nginx
-
-- name: Configure for CI/CD
-  ansible.builtin.include_role:
-    name: ci_repo

@@ -33,18 +33,19 @@ newapp APP:
 	python src/manage.py startapp {{ APP }}
 
 # builds a production image, running integration tests along the way
-build:
+build: clean
   set COMMIT_ID (git rev-parse --short HEAD); \
   podman build \
   -t acbilson/savoy:latest \
   -t acbilson/savoy:$COMMIT_ID .
 
-# clean up the prod directories
-clean_prod:
+# clean up mnt and dbg directories
+clean:
 	rm -rf mnt
+	rm -rf src/dbg
 
 # configures the local environment for production
-init_prod: clean_prod collect_static
+init_prod: clean collect_static
 	mkdir -p mnt/{db,media}
 	cp -f src/db.sqlite3 mnt/db/
 	cp -r src/dbg/static mnt/static
@@ -57,10 +58,10 @@ start_nginx:
   --name savoy-nginx \
   nginx:latest
 
-# starts the production image
+# starts the production image with nginx server
 start: init_prod start_nginx
   podman run --rm \
-  --expose 8000 -p 8000:8000 \
+  --expose 8000 -p 8000:80 \
   -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
   -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
   -e DJANGO_DEBUG=False \
@@ -68,6 +69,18 @@ start: init_prod start_nginx
   -e DJANGO_MEDIA_ROOT=$DJANGO_MEDIA_ROOT_PRD \
   -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
   -e DJANGO_MEDIA_URL=$DJANGO_MEDIA_URL_PRD \
-  -e DJANGO_DB_PATH=$DJANGO_DB_PATH_PRD \
+  -e DJANGO_DB_ROOT=$DJANGO_DB_ROOT_PRD \
   --name savoy \
   acbilson/savoy:latest
+
+# runs a simple ansible ad-hoc command to test the connection
+test-connection:
+	ansible -i ansible/prod.ini --vault-password-file=ansible/.vault_pass -u abilson vultr -m ping
+
+# edits the encrypted ansible group variables
+edit-vault:
+	ansible-vault edit --vault-password-file=ansible/.vault_pass ansible/group_vars/web/vault.yml
+
+# runs the ansible deployment playbook
+deploy:
+	ansible-playbook -i ansible/prod.ini --vault-password-file=ansible/.vault_pass --skip-tags onetime ansible/deploy.yml

@@ -1,6 +1,6 @@
 # runs a simple Ansible ad-hoc command to test the connection
 test-connection:
-	ansible -i host.ini --vault-password-file=.vault_pass -u abilson vultr -m ping
+	ansible -i prod.ini --vault-password-file=.vault_pass -u abilson vultr -m ping
 
 # edits the encrypted group variables
 edit-vault:

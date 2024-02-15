@@ -22,25 +22,27 @@ if DEBUG is True or DEBUG == "True":
     print("running in debug mode")
     BASE_DIR = Path(__file__).resolve().parent.parent
     ALLOWED_HOSTS = []
+    SECRET_KEY = "this-is-not-a-production-secret"
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'dbg/static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'dbg/media')
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
 
-    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
+    DB_ROOT = BASE_DIR
 
 else:
     print("running in production mode")
     BASE_DIR = Path(__file__).resolve().parent
     ALLOWED_HOSTS = [environ.get("DJANGO_STATIC_HOST")]
+    SECRET_KEY = environ.get("DJANGO_SESSION_SECRET")
 
     STATIC_ROOT = environ.get("DJANGO_STATIC_ROOT")
     MEDIA_ROOT = environ.get("DJANGO_MEDIA_ROOT")
     STATIC_URL = environ.get("DJANGO_STATIC_URL")
     MEDIA_URL = environ.get("DJANGO_MEDIA_URL")
 
-    DB_PATH = environ.get("DJANGO_DB_PATH")
+    DB_ROOT = environ.get("DJANGO_DB_ROOT")
 
 print(f"DEBUG: {DEBUG}")
 print(f"BASE_DIR: {BASE_DIR}")
@@ -48,18 +50,10 @@ print(f"STATIC_ROOT: {STATIC_ROOT}")
 print(f"MEDIA_ROOT: {MEDIA_ROOT}")
 print(f"STATIC_URL: {STATIC_URL}")
 print(f"MEDIA_URL: {MEDIA_URL}")
-print(f"DB_PATH: {DB_PATH}")
+print(f"DB_ROOT: {DB_ROOT}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-r5qu-$s*4-q886-in9_sg)8=-5s8!pgw0ws%x@w)jnc6apbm%1"
-
-ALLOWED_HOSTS = ['localhost']
-
-# Both static and media files need to be served by a web proxy like Nginx
-# in production. The dev server will serve them directly for testing.
 
 # Static file route - Added to find global static files in ../static/css/
 STATICFILES_DIRS = [
@@ -113,11 +107,10 @@ WSGI_APPLICATION = "savoy.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DB_PATH,
+        "NAME": os.path.join(DB_ROOT, 'db.sqlite3'),
     }
 }
 
