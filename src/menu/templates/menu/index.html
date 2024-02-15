@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block content %}
-<section class="flow-m">
+<section class="flow-m | menu">
 {% if menu_sections %}
 	 {% for section in menu_sections %}
-	 <h2>{{ section.title_txt }}</h2>
+	 <h2>{{ section.display_txt }}{% if section.raw_disclaimer %}<sup>*</sup>{% endif %}</h2>
 	 <ul role="list" class="flow-m">
 		 {% for item in section.menuitem_set.all %}
 		 <li class="spread-between | menu-item">
 			 <div>
 				 <h3>{{ item.display_txt }}{% if item.raw_disclaimer %}<sup>*</sup>{% endif %}</h3>
-				 <p>{{ item.desc_txt }}</p>
+				 <p class="description">{{ item.desc_txt }}</p>
 			 </div>
 			 <div>
 				 {% if item.image %}
