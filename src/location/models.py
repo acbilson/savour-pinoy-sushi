@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from django.db import models
 
 
@@ -30,6 +31,10 @@ class LocationStop(models.Model):
     # where the truck will be located
     location = models.ForeignKey(LocationDestination, on_delete=models.CASCADE)
 
+    def filtered_by_days_back(self):
+        settings = LocationSetting.objects.first()
+        days_back = date.today() - timedelta(days=settings.display_days_back)
+        return self.stop_dt >= days_back
 
     def __str__(self):
         return f"{str(self.location)} on {self.stop_dt}"

@@ -4,17 +4,25 @@
 
 .menu {
 
+	.description {
+		margin-left: var(--space-xs);
+
+		@media screen and (max-width: 375px) {
+			margin-left: var(--space-3xs);
+		}
+	}
+
 	h2 {
 		color: var(--color-tertiary);
 	}
 
-
 	.menu-item {
 		margin-left: var(--space-s);
 
-		.description {
-			margin-left: var(--space-xs);
+		@media screen and (max-width: 375px) {
+			margin-left: var(--space-2xs);
 		}
+
 		img {
 			max-width: calc(var(--step-5) * 5);
 			border: 1px solid var(--color-stroke);

@@ -20,6 +20,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.site.site_header = "Savour Pinoy & Sushi Administration"
 
 urlpatterns = [
     path("", include("home.urls")),
