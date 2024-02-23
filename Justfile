@@ -24,6 +24,7 @@ make_migration APP:
 	python src/manage.py makemigrations {{ APP }}
 
 # collect all static assets to STATIC_ROOT
+[private]
 collect_static:
 	set -x DJANGO_DEBUG True
 	python src/manage.py collectstatic --no-input
@@ -32,7 +33,7 @@ collect_static:
 newapp APP:
 	python src/manage.py startapp {{ APP }}
 
-# builds a production image, running integration tests along the way
+# builds a production image
 build: clean
   set COMMIT_ID (git rev-parse --short HEAD); \
   podman build \
@@ -46,12 +47,14 @@ clean:
 	rm -rf deploy
 
 # configures the local environment for production
+[private]
 init_prod: clean collect_static
 	mkdir -p mnt/{db,media}
 	cp -f src/db.sqlite3 mnt/db/
 	cp -r src/dbg/static mnt/static
 
 # starts an nginx server to serve static and media assets
+[private]
 start_nginx:
   podman run --rm -d \
   --expose 5000 -p 5000:80 \
@@ -59,13 +62,32 @@ start_nginx:
   --name savoy-nginx \
   nginx:latest
 
-# starts the production image with nginx server
-start: init_prod start_nginx
+# starts the production image
+[private]
+start_savoy: init_prod
   podman run --rm \
   --expose 8000 -p 8000:80 \
   -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
   -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
   -e DJANGO_DEBUG=False \
+  -e DJANGO_SESSION_SECRET=$DJANGO_SESSION_SECRET \
+  -e DJANGO_HOST=$DJANGO_HOST_PRD \
+  -e DJANGO_STATIC_ROOT=$DJANGO_STATIC_ROOT_PRD \
+  -e DJANGO_MEDIA_ROOT=$DJANGO_MEDIA_ROOT_PRD \
+  -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
+  -e DJANGO_MEDIA_URL=$DJANGO_MEDIA_URL_PRD \
+  -e DJANGO_DB_ROOT=$DJANGO_DB_ROOT_PRD \
+  --name savoy \
+  acbilson/savoy:latest
+
+# starts the production image with nginx server
+start: start_nginx start_savoy
+  podman run --rm \
+  --expose 8000 -p 8000:80 \
+  -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
+  -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
+  -e DJANGO_DEBUG=False \
+  -e DJANGO_SESSION_SECRET=$DJANGO_SESSION_SECRET \
   -e DJANGO_HOST=$DJANGO_HOST_PRD \
   -e DJANGO_STATIC_ROOT=$DJANGO_STATIC_ROOT_PRD \
   -e DJANGO_MEDIA_ROOT=$DJANGO_MEDIA_ROOT_PRD \
@@ -76,6 +98,7 @@ start: init_prod start_nginx
   acbilson/savoy:latest
 
 # configures the local environment for deployment. DOES NOT SEND ADMIN FILES
+[private]
 init_deploy: clean collect_static
 	mkdir -p deploy/static
 	cp -r src/dbg/static/{css,menu,home} deploy/static/
