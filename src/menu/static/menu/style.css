@@ -16,6 +16,13 @@
 		color: var(--color-tertiary);
 	}
 
+	/* overrides dark scheme blue on red */
+	@media (prefers-color-scheme: dark) {
+		h4 {
+			color: var(--color-flag-gold);
+		}
+	}
+
 	.menu-item {
 		margin-left: var(--space-s);
 
