@@ -436,6 +436,10 @@ a:hover {
 	flex-flow: column nowrap;
 }
 
+.no-wrap {
+	flex-wrap: nowrap;
+}
+
 .wrapper {
 	margin-left: auto;
 	margin-right: auto;
