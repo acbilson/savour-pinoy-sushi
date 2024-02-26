@@ -101,7 +101,7 @@ start: start_nginx start_savoy
 [private]
 init_deploy: clean collect_static
 	mkdir -p deploy/static
-	cp -r src/dbg/static/{css,menu,home} deploy/static/
+	cp -r src/dbg/static/{css,menu,home,location} deploy/static/
 	scp -r deploy/static vultr:/srv/savoy
 
 # runs a simple ansible ad-hoc command to test the connection

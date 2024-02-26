@@ -2,7 +2,7 @@
 project_name: savoy
 repo_name: savoy-pinot
 image_name: localhost/acbilson/savoy:latest
-server_name: "savoy-demo.{{ g_host }}"
+server_name: "savourpinoysushi.{{ g_host }}"
 exposed_port: 8450
 
 static_root: /srv/savoy/static

@@ -15,7 +15,7 @@ FROM docker.io/library/python:3.10.6-alpine3.15 as base
 COPY --from=build /root/.local /root/.local
 
 # (re)installs a few dependencies
-RUN apk add pcre-dev
+RUN apk add pcre-dev imagemagick
 
 # load uwsgi config
 RUN mkdir -p /etc/savoy
