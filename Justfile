@@ -37,8 +37,8 @@ newapp APP:
 build: clean
   set COMMIT_ID (git rev-parse --short HEAD); \
   podman build \
-  -t acbilson/savoy:latest \
-  -t acbilson/savoy:$COMMIT_ID .
+  -t acbilson/savour-pinoy-sushi:latest \
+  -t acbilson/savour-pinoy-sushi:$COMMIT_ID .
 
 # clean up mnt and dbg directories
 clean:
@@ -58,17 +58,17 @@ init_prod: clean collect_static
 start_nginx:
   podman run --rm -d \
   --expose 5000 -p 5000:80 \
-  -v /Users/alexbilson/source/savoy-pinot/mnt:/usr/share/nginx/html:ro \
-  --name savoy-nginx \
+  -v /Users/alexbilson/source/savour-pinoy-sushi-pinot/mnt:/usr/share/nginx/html:ro \
+  --name savour-pinoy-sushi-nginx \
   nginx:latest
 
 # starts the production image
 [private]
-start_savoy: init_prod
+start_savour-pinoy-sushi: init_prod
   podman run --rm \
   --expose 8000 -p 8000:80 \
-  -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
-  -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
+  -v /Users/alexbilson/source/savour-pinoy-sushi-pinot/mnt/db:/mnt/db \
+  -v /Users/alexbilson/source/savour-pinoy-sushi-pinot/mnt/media:/mnt/media \
   -e DJANGO_DEBUG=False \
   -e DJANGO_SESSION_SECRET=$DJANGO_SESSION_SECRET \
   -e DJANGO_HOST=$DJANGO_HOST_PRD \
@@ -77,15 +77,15 @@ start_savoy: init_prod
   -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
   -e DJANGO_MEDIA_URL=$DJANGO_MEDIA_URL_PRD \
   -e DJANGO_DB_ROOT=$DJANGO_DB_ROOT_PRD \
-  --name savoy \
-  acbilson/savoy:latest
+  --name savour-pinoy-sushi \
+  acbilson/savour-pinoy-sushi:latest
 
 # starts the production image with nginx server
-start: start_nginx start_savoy
+start: start_nginx start_savour-pinoy-sushi
   podman run --rm \
   --expose 8000 -p 8000:80 \
-  -v /Users/alexbilson/source/savoy-pinot/mnt/db:/mnt/db \
-  -v /Users/alexbilson/source/savoy-pinot/mnt/media:/mnt/media \
+  -v /Users/alexbilson/source/savour-pinoy-sushi-pinot/mnt/db:/mnt/db \
+  -v /Users/alexbilson/source/savour-pinoy-sushi-pinot/mnt/media:/mnt/media \
   -e DJANGO_DEBUG=False \
   -e DJANGO_SESSION_SECRET=$DJANGO_SESSION_SECRET \
   -e DJANGO_HOST=$DJANGO_HOST_PRD \
@@ -94,15 +94,15 @@ start: start_nginx start_savoy
   -e DJANGO_STATIC_URL=$DJANGO_STATIC_URL_PRD \
   -e DJANGO_MEDIA_URL=$DJANGO_MEDIA_URL_PRD \
   -e DJANGO_DB_ROOT=$DJANGO_DB_ROOT_PRD \
-  --name savoy \
-  acbilson/savoy:latest
+  --name savour-pinoy-sushi \
+  acbilson/savour-pinoy-sushi:latest
 
 # configures the local environment for deployment. DOES NOT SEND ADMIN FILES
 [private]
 init_deploy: clean collect_static
 	mkdir -p deploy/static
 	cp -r src/dbg/static/{css,menu,home,location} deploy/static/
-	scp -r deploy/static vultr:/srv/savoy
+	scp -r deploy/static vultr:/srv/savour-pinoy-sushi
 
 # runs a simple ansible ad-hoc command to test the connection
 test-connection:

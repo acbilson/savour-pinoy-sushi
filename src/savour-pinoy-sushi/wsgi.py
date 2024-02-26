@@ -1,5 +1,5 @@
 """
-WSGI config for savoy project.
+WSGI config for savour-pinoy-sushi project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "savoy.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "savour-pinoy-sushi.settings")
 
 application = get_wsgi_application()

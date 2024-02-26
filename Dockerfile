@@ -18,8 +18,8 @@ COPY --from=build /root/.local /root/.local
 RUN apk add pcre-dev imagemagick
 
 # load uwsgi config
-RUN mkdir -p /etc/savoy
-COPY ./etc/savoy.ini /etc/savoy
+RUN mkdir -p /etc/savour-pinoy-sushi
+COPY ./etc/savour-pinoy-sushi.ini /etc/savour-pinoy-sushi
 
 # install source code
 COPY ./src /app/src
@@ -37,7 +37,7 @@ ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 #############
 
 FROM base as test
-WORKDIR /app/savoy
+WORKDIR /app/savour-pinoy-sushi
 
 # photo for testing
 #COPY src/tests/test_data/photo.heic /mnt/data/
@@ -54,6 +54,6 @@ RUN mkdir -p /mnt/media/
 RUN mkdir -p /mnt/db/
 
 FROM test as prod
-WORKDIR /app/savoy
+WORKDIR /app/savour-pinoy-sushi
 
-CMD ["/root/.local/bin/uwsgi", "--ini", "/etc/savoy/savoy.ini"]
+CMD ["/root/.local/bin/uwsgi", "--ini", "/etc/savour-pinoy-sushi/savour-pinoy-sushi.ini"]

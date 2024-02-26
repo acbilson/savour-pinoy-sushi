@@ -1,4 +1,4 @@
 ---
-project_name: savoy
-repo_name: savoy-pinot
-image_name: localhost/acbilson/savoy:latest
+project_name: savour-pinoy-sushi
+repo_name: savour-pinoy-sushi
+image_name: localhost/acbilson/savour-pinoy-sushi:latest

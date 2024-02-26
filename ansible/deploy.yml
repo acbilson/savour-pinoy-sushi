@@ -4,4 +4,4 @@
   user: abilson
   become: true
   roles:
-    - savoy_pinot
+    - deploy
