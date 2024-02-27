@@ -10,7 +10,7 @@ __pycache__/
 # runtime dirs
 mnt/
 dbg/
-deploy/
+prd/
 
 # ansible
 .vault_pass

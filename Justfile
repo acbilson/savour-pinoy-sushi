@@ -44,7 +44,7 @@ build: clean
 clean:
 	rm -rf mnt
 	rm -rf src/dbg
-	rm -rf deploy
+	rm -rf prd
 
 # configures the local environment for production
 [private]
@@ -100,9 +100,9 @@ start: start_nginx start_savour-pinoy-sushi
 # configures the local environment for deployment. DOES NOT SEND ADMIN FILES
 [private]
 init_deploy: clean collect_static
-	mkdir -p deploy/static
-	cp -r src/dbg/static/{css,menu,home,location} deploy/static/
-	scp -r deploy/static vultr:/srv/savour-pinoy-sushi
+	mkdir -p prd/static
+	cp -r src/dbg/static/{css,menu,home,location} prd/static/
+	scp -r prd/static vultr:/srv/savour-pinoy-sushi
 
 # runs a simple ansible ad-hoc command to test the connection
 test-connection:

@@ -1,0 +1,18 @@
+---
+project_name: savour-pinoy-sushi
+repo_name: savour-pinoy-sushi
+image_name: localhost/acbilson/savour-pinoy-sushi:latest
+server_name: "savourpinoysushi.{{ g_host }}"
+exposed_port: 8450
+
+static_root: /srv/savour-pinoy-sushi/static
+media_root: /mnt/images/savour-pinoy-sushi/media
+db_root: /srv/savour-pinoy-sushi/db
+
+# the static host is automatically prepended
+static_url: "static/"
+media_url: "media/"
+
+admin_user: "{{ VAULT_DJANGO_ADMIN_USER }}"
+admin_password: "{{ VAULT_DJANGO_ADMIN_PASSWORD }}"
+session_secret: "{{ VAULT_DJANGO_SESSION_SECRET }}"
